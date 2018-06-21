@@ -4,7 +4,7 @@ client = MongoClient('localhost', 27017)
 
 db = client.Fb_Raw
 
-location = db.test
+location = db.location
 
 
 def levenshtein(s1, s2):
