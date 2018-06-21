@@ -27,15 +27,14 @@ def clean_standard_info(filename):
     for info in dataset:
         info = [s for s in info if not s.isdigit()]
         for item in info:
-            newItem = remove_accents2(item)
-            newItem = newItem.lower()
-            newItem = newItem.replace(" ", "")
+            newItem = remove_accents(item).lower().replace(" ", "")
+            newItem = removeCharacter(newItem)
             if newItem not in data:
                 data.append(newItem)
     return commune, district, city, country, data
 
 
-def remove_accents2(input_str):
+def remove_accents(input_str):
     s1 = u'ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠạẢảẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẸẹẺẻẼẽẾếỀềỂểỄễỆệỈỉỊịỌọỎỏỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợỤụỦủỨứỪừỬửỮữỰựỲỳỴỵỶỷỸỹ'
     s0 = u'AAAAEEEIIOOOOUUYaaaaeeeiioooouuyAaDdIiUuOoUuAaAaAaAaAaAaAaAaAaAaAaAaEeEeEeEeEeEeEeEeIiIiOoOoOoOoOoOoOoOoOoOoOoOoUuUuUuUuUuUuUuYyYyYyYy'
     s = ''
@@ -59,7 +58,7 @@ def clean_facebook_data(filename):
     dataset = list(dataset)
     csvDataFile.close()
     for info in dataset:
-        info[1] = remove_accents2(info[1])
+        info[1] = remove_accents(info[1])
         info[1] = info[1].lower()
         info[1] = info[1].replace(" ", "")
         info[1] = re.sub(r'[^A-z]*[^,]*', ' ', info[1])
@@ -91,4 +90,5 @@ def domestic_filter(standard, facebook):
     return domestic, foreign
 
 
-# domestic, foreign = domestic_filter("tinh_huyen_xa.csv", "test.csv")
+domestic, foreign = domestic_filter("tinh_huyen_xa.csv", "test.csv")
+print(domestic)
