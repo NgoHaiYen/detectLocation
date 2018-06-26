@@ -4,7 +4,7 @@ client = MongoClient('localhost', 27017)
 
 db = client.Fb_Raw
 
-location = db.location
+location = db.vn_location
 
 
 def levenshtein(s1, s2):
@@ -127,11 +127,11 @@ def matchGroup(g, word, threshold):
     return g
 
 
-data = location.find().limit(1000)
+data = location.find().limit(100000)
 groupResult = []
-threshold = 0.4
+threshold = 0.2
 for d in data:
-    groupResult = matchGroup(groupResult, d["name"], threshold)
+    groupResult = matchGroup(groupResult, d["location"], threshold)
 
 for g in groupResult:
     print(g)
