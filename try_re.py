@@ -63,7 +63,7 @@ def clean_standard_info(filename):
             city_list.append(info[1])
     return data, city_list
  
- from fuzzywuzzy import process
+from fuzzywuzzy import process
 
 def get_matches(query, choices, limit = 3):
     results = process.extract(query, choices, limit = limit)
@@ -89,25 +89,15 @@ def levenshtein(s1, s2):
 
 def domestic_filter(standard, facebook, threshold):
     domestic = {"_id" : "", "name" : "" }
-    temp = []
-    all = []
-    std_data, city_list = clean_standard_info(standard)
     ori_data = load_data_db(facebook)
     fb_data = clean_facebook_data(facebook)
     for item in fb_data:
-        i = 0
-        curr_score = 10000000000
-        most_simi = []
         print("------------------------")
         print(item)
         for stan in fb_data:
-            
             distance = levenshtein(item[1], stan[1])
             if distance < threshold:
-#                     curr_score = distance
                 most_simi = ori_data[fb_data.index(stan)]
                 print(most_simi)
-                i = i + 1
                 ori_data.remove(ori_data[fb_data.index(stan)])
                 fb_data.remove(stan)
-        print(i)    

@@ -27,8 +27,10 @@ def clean_standard_info(filename):
     for info in dataset:
         info = [s for s in info if not s.isdigit()]
         for item in info:
-            newItem = remove_accents(item).lower().replace(" ", "")
-            newItem = removeCharacter(newItem)
+            newItem = remove_accents(item)
+            newItem = newItem.lower()
+            newItem = newItem.replace(" ", "")
+            # newItem = removeCharacter(newItem)
             if newItem not in data:
                 data.append(newItem)
     return commune, district, city, country, data
@@ -61,7 +63,7 @@ def clean_facebook_data(filename):
         info[1] = remove_accents(info[1])
         info[1] = info[1].lower()
         info[1] = info[1].replace(" ", "")
-        info[1] = re.sub(r'[^A-z]*[^,]*', ' ', info[1])
+        # info[1] = re.sub(r'[^A-z]*[^,]*', ' ', info[1])
         info = [info[0]] + [x.strip() for x in info[1].split(',')]
         if info not in fbdata:
             fbdata.append(info)
